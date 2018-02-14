@@ -33,7 +33,7 @@ class ProfileForm extends React.Component {
                 <input type="submit" value="ChangeProfile"/>
             </form>)
                 :
-                <p>Sign in first you dumbass!</p>
+                <p>Sign in first, you dumbass!</p>
         )
     }
 }
