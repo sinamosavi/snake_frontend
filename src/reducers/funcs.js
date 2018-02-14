@@ -9,14 +9,16 @@ export const JOIN_GAME = 'funcs/JOIN_GAME'
 export const WITH_PLAYER = 'funcs/WITH_PLAYER'
 export const WITH_BOT = 'funcs/WITH_BOT'
 export const CHANGE_PROFILE = 'funcs/CHANGE_PROFILE'
+export const ROLL_DICE = 'funcs/ROLL_DICE'
 
 const initialState = {
-    turn: 1,
+    turn:1,
     place: [0,0],
     myTurn: 1,
     user: null,
     player2: null,
     game: null,
+    isMyTurn: true
 }
 
 export default (state = initialState, action) => {
@@ -29,7 +31,8 @@ export default (state = initialState, action) => {
         case JOIN_GAME:
             return{
                 ...state,
-                game: action.game
+                game: action.game,
+                isMyTurn: action.isMyTurn
             }
         case WITH_PLAYER:
             return{
@@ -68,6 +71,12 @@ export default (state = initialState, action) => {
             return{
                 ...state,
                 user: action.user
+            }
+        case ROLL_DICE:
+            return{
+                ...state,
+                game: action.game,
+                isMyTurn: !state.isMyTurn
             }
 
         default:
@@ -155,7 +164,7 @@ export const changeProfile = (user, username, password, first_name, last_name, g
             }
         })
     }
-}
+};
 
 export const createNewGame = () => {
     return dispatch => {
@@ -170,13 +179,16 @@ export const createNewGame = () => {
                     type: CREATE_NEW_GAME_REQUEST,
                     game: new_game
                 });
-                let query = new Parse.Query(new_game);
+                let query = new Parse.Query(Game);
                 let subscription = query.subscribe();
-                subscription.on('update', (game) => {
-                    dispatch({
+                subscription.on('update', function(game){
+
+                    alert("player " + game.get('player2').toString())
+                    return dispatch({
                         type: WITH_PLAYER,
-                        player2: game.get('player2')
+                        player2: game.get('player2').toString()
                     })
+
                 });
                 return setTimeout(() => {
                     new_game.set('player2', 'bot');
@@ -199,22 +211,30 @@ export const createNewGame = () => {
     }
 }
 
-export const joinToGame = (gameId) => {
-
+export const joinToGame = (gameId, username) => {
     return dispatch => {
         let Game = Parse.Object.extend("Game");
         let query = new Parse.Query(Game);
-        query.equalTo("id", gameId);
+        query.equalTo("objectId", gameId);
         query.find({
             success:function(list) {
-                alert('hi')
-                push('/game')
                 if(list.length){
-                    dispatch({
-                        type: JOIN_GAME,
-                        game: list[0],
+                    let g = list[0];
+                    g.set('player2', username);
+                    g.save(null, {
+                        success: function (game) {
+                            alert('you joined to this game ' + game.id)
+                            dispatch({
+                                type: JOIN_GAME,
+                                game: game,
+                            });
+                        },
+                        error: function (user, error) {
+                            alert("Joining game error: " + error.message)
+                        }
                     });
                 }
+
             },
             error: function(list) {
 
@@ -222,3 +242,22 @@ export const joinToGame = (gameId) => {
         });
     }
 }
+
+export const rollDice = (game, p1NewPos, p2NewPos) => {
+    return dispatch => {
+        game.set('player1_position', p1NewPos);
+        game.set('player2_position', p2NewPos);
+
+        game.save(null, {
+            success: function (user) {
+                dispatch({
+                    type: ROLL_DICE,
+                    game: game,
+                });
+            },
+            error: function (user, error) {
+                alert("Roll Dice error: " + error.message)
+            }
+        })
+    }
+};

@@ -3,7 +3,7 @@ import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import {
     changeProfile
-} from '../../modules/funcs'
+} from '../../reducers/funcs'
 
 class ProfileForm extends React.Component {
     handleChangeProfile(e) {

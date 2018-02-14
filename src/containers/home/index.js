@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import {
     createNewGame,
     joinToGame,
-} from '../../modules/funcs'
+} from '../../reducers/funcs'
 import {Link} from "react-router-dom";
 import withRouter from "react-router-dom/es/withRouter";
 
@@ -13,7 +13,7 @@ class JoinForm extends React.Component {
     join(e) {
         e.preventDefault();
         let gameId = this.refs.gameId.value;
-        this.props.onJoin(gameId)
+        this.props.onJoin(gameId, this.props.user.get('username').toString());
     }
     render() {
         return (
@@ -33,7 +33,7 @@ class Home extends Component{
                 <div>
                     <h1>Home</h1>
                     <button onClick={this.props.createNewGame} disabled={!this.props.user}><Link to="/game">createNewGame</Link></button>
-                    <JoinForm onJoin={this.props.joinToGame}/>
+                    <JoinForm onJoin={this.props.joinToGame} user={this.props.user}/>
                 </div>
             )
         }

@@ -14,7 +14,7 @@ const GameFrame = function (props) {
         )
     }
     else{
-        if(!props.player2){
+        if(props.player2 === null || props.player2 === undefined){
             return(
                 <div>
                     <p>

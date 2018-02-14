@@ -12783,83 +12783,83 @@
     },{"../core-js/symbol":55,"../core-js/symbol/iterator":56}],64:[function(_dereq_,module,exports){
 
     },{}],65:[function(_dereq_,module,exports){
-        _dereq_('../modules/web.dom.iterable');
-        _dereq_('../modules/es6.string.iterator');
-        module.exports = _dereq_('../modules/core.get-iterator');
+        _dereq_('../reducers/web.dom.iterable');
+        _dereq_('../reducers/es6.string.iterator');
+        module.exports = _dereq_('../reducers/core.get-iterator');
 
     },{"../modules/core.get-iterator":155,"../modules/es6.string.iterator":166,"../modules/web.dom.iterable":176}],66:[function(_dereq_,module,exports){
-        var core = _dereq_('../../modules/_core');
+        var core = _dereq_('../../reducers/_core');
         var $JSON = core.JSON || (core.JSON = { stringify: JSON.stringify });
         module.exports = function stringify(it) { // eslint-disable-line no-unused-vars
             return $JSON.stringify.apply($JSON, arguments);
         };
 
     },{"../../modules/_core":93}],67:[function(_dereq_,module,exports){
-        _dereq_('../modules/es6.object.to-string');
-        _dereq_('../modules/es6.string.iterator');
-        _dereq_('../modules/web.dom.iterable');
-        _dereq_('../modules/es6.map');
-        _dereq_('../modules/es7.map.to-json');
-        _dereq_('../modules/es7.map.of');
-        _dereq_('../modules/es7.map.from');
-        module.exports = _dereq_('../modules/_core').Map;
+        _dereq_('../reducers/es6.object.to-string');
+        _dereq_('../reducers/es6.string.iterator');
+        _dereq_('../reducers/web.dom.iterable');
+        _dereq_('../reducers/es6.map');
+        _dereq_('../reducers/es7.map.to-json');
+        _dereq_('../reducers/es7.map.of');
+        _dereq_('../reducers/es7.map.from');
+        module.exports = _dereq_('../reducers/_core').Map;
 
     },{"../modules/_core":93,"../modules/es6.map":157,"../modules/es6.object.to-string":165,"../modules/es6.string.iterator":166,"../modules/es7.map.from":169,"../modules/es7.map.of":170,"../modules/es7.map.to-json":171,"../modules/web.dom.iterable":176}],68:[function(_dereq_,module,exports){
-        _dereq_('../../modules/es6.object.create');
-        var $Object = _dereq_('../../modules/_core').Object;
+        _dereq_('../../reducers/es6.object.create');
+        var $Object = _dereq_('../../reducers/_core').Object;
         module.exports = function create(P, D) {
             return $Object.create(P, D);
         };
 
     },{"../../modules/_core":93,"../../modules/es6.object.create":158}],69:[function(_dereq_,module,exports){
-        _dereq_('../../modules/es6.object.define-property');
-        var $Object = _dereq_('../../modules/_core').Object;
+        _dereq_('../../reducers/es6.object.define-property');
+        var $Object = _dereq_('../../reducers/_core').Object;
         module.exports = function defineProperty(it, key, desc) {
             return $Object.defineProperty(it, key, desc);
         };
 
     },{"../../modules/_core":93,"../../modules/es6.object.define-property":159}],70:[function(_dereq_,module,exports){
-        _dereq_('../../modules/es6.object.freeze');
-        module.exports = _dereq_('../../modules/_core').Object.freeze;
+        _dereq_('../../reducers/es6.object.freeze');
+        module.exports = _dereq_('../../reducers/_core').Object.freeze;
 
     },{"../../modules/_core":93,"../../modules/es6.object.freeze":160}],71:[function(_dereq_,module,exports){
-        _dereq_('../../modules/es6.object.get-own-property-descriptor');
-        var $Object = _dereq_('../../modules/_core').Object;
+        _dereq_('../../reducers/es6.object.get-own-property-descriptor');
+        var $Object = _dereq_('../../reducers/_core').Object;
         module.exports = function getOwnPropertyDescriptor(it, key) {
             return $Object.getOwnPropertyDescriptor(it, key);
         };
 
     },{"../../modules/_core":93,"../../modules/es6.object.get-own-property-descriptor":161}],72:[function(_dereq_,module,exports){
-        _dereq_('../../modules/es6.object.get-prototype-of');
-        module.exports = _dereq_('../../modules/_core').Object.getPrototypeOf;
+        _dereq_('../../reducers/es6.object.get-prototype-of');
+        module.exports = _dereq_('../../reducers/_core').Object.getPrototypeOf;
 
     },{"../../modules/_core":93,"../../modules/es6.object.get-prototype-of":162}],73:[function(_dereq_,module,exports){
-        _dereq_('../../modules/es6.object.keys');
-        module.exports = _dereq_('../../modules/_core').Object.keys;
+        _dereq_('../../reducers/es6.object.keys');
+        module.exports = _dereq_('../../reducers/_core').Object.keys;
 
     },{"../../modules/_core":93,"../../modules/es6.object.keys":163}],74:[function(_dereq_,module,exports){
-        _dereq_('../../modules/es6.object.set-prototype-of');
-        module.exports = _dereq_('../../modules/_core').Object.setPrototypeOf;
+        _dereq_('../../reducers/es6.object.set-prototype-of');
+        module.exports = _dereq_('../../reducers/_core').Object.setPrototypeOf;
 
     },{"../../modules/_core":93,"../../modules/es6.object.set-prototype-of":164}],75:[function(_dereq_,module,exports){
-        _dereq_('../../modules/es6.symbol');
-        _dereq_('../../modules/es6.object.to-string');
-        _dereq_('../../modules/es7.symbol.async-iterator');
-        _dereq_('../../modules/es7.symbol.observable');
-        module.exports = _dereq_('../../modules/_core').Symbol;
+        _dereq_('../../reducers/es6.symbol');
+        _dereq_('../../reducers/es6.object.to-string');
+        _dereq_('../../reducers/es7.symbol.async-iterator');
+        _dereq_('../../reducers/es7.symbol.observable');
+        module.exports = _dereq_('../../reducers/_core').Symbol;
 
     },{"../../modules/_core":93,"../../modules/es6.object.to-string":165,"../../modules/es6.symbol":167,"../../modules/es7.symbol.async-iterator":172,"../../modules/es7.symbol.observable":173}],76:[function(_dereq_,module,exports){
-        _dereq_('../../modules/es6.string.iterator');
-        _dereq_('../../modules/web.dom.iterable');
-        module.exports = _dereq_('../../modules/_wks-ext').f('iterator');
+        _dereq_('../../reducers/es6.string.iterator');
+        _dereq_('../../reducers/web.dom.iterable');
+        module.exports = _dereq_('../../reducers/_wks-ext').f('iterator');
 
     },{"../../modules/_wks-ext":152,"../../modules/es6.string.iterator":166,"../../modules/web.dom.iterable":176}],77:[function(_dereq_,module,exports){
-        _dereq_('../modules/es6.object.to-string');
-        _dereq_('../modules/web.dom.iterable');
-        _dereq_('../modules/es6.weak-map');
-        _dereq_('../modules/es7.weak-map.of');
-        _dereq_('../modules/es7.weak-map.from');
-        module.exports = _dereq_('../modules/_core').WeakMap;
+        _dereq_('../reducers/es6.object.to-string');
+        _dereq_('../reducers/web.dom.iterable');
+        _dereq_('../reducers/es6.weak-map');
+        _dereq_('../reducers/es7.weak-map.of');
+        _dereq_('../reducers/es7.weak-map.from');
+        module.exports = _dereq_('../reducers/_core').WeakMap;
 
     },{"../modules/_core":93,"../modules/es6.object.to-string":165,"../modules/es6.weak-map":168,"../modules/es7.weak-map.from":174,"../modules/es7.weak-map.of":175,"../modules/web.dom.iterable":176}],78:[function(_dereq_,module,exports){
         module.exports = function (it) {
