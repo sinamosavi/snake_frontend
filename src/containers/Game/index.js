@@ -1,10 +1,8 @@
 import React from 'react'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
-import {
-    signUp
-} from '../../modules/funcs'
 import {Link} from "react-router-dom";
+import SnakeLadder from "./SnakeLadder";
 
 
 const GameFrame = function (props) {
@@ -28,7 +26,11 @@ const GameFrame = function (props) {
             )
         }
         else{
-            alert("Player two exists now!")
+            return(
+                <div>
+                    <SnakeLadder/>
+                </div>
+            )
         }
     }
 }
@@ -39,11 +41,7 @@ const mapStateToProps = state => ({
     player2: state.funcs.player2
 })
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-    signUp
-}, dispatch)
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+    mapStateToProps
 )(GameFrame)

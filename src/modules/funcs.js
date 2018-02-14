@@ -190,7 +190,7 @@ export const createNewGame = () => {
                             alert('Failed to create new Game, with error code: ' + error.message);
                         }
                     });
-                }, 10000)
+                }, 1000)
             },
             error: function(new_game, error) {
                 alert('Failed to create new Game, with error code: ' + error.message);
