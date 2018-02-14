@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Component} from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {
@@ -26,13 +26,26 @@ class JoinForm extends React.Component {
     }
 }
 
-const Home = props => (
-  <div>
-    <h1>Home</h1>
-      <button onClick={props.createNewGame} disabled={!props.user ? true : false}><Link to="/game">createNewGame</Link></button>
-      <JoinForm onJoin={props.joinToGame}/>
-  </div>
-)
+class Home extends Component{
+    render(){
+        if(this.props.user){
+            return(
+                <div>
+                    <h1>Home</h1>
+                    <button onClick={this.props.createNewGame} disabled={!this.props.user}><Link to="/game">createNewGame</Link></button>
+                    <JoinForm onJoin={this.props.joinToGame}/>
+                </div>
+            )
+        }
+        else{
+            return(
+                <div>
+                    <p>Please sign in or sign up to start playing!</p>
+                </div>
+            )
+        }
+    }
+}
 
 const mapStateToProps = state => ({
     user: state.funcs.user
