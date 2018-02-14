@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {
     signUp
-} from '../../reducers/funcs'
+} from '../../reducers/allactions'
 
 class SignUpForm extends React.Component {
     handleSignUp(e) {

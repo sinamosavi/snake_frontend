@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import {
     createNewGame,
     joinToGame,
-} from '../../reducers/funcs'
+} from '../../reducers/allactions'
 import {Link} from "react-router-dom";
 import withRouter from "react-router-dom/es/withRouter";
 

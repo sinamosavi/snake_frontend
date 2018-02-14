@@ -2,11 +2,12 @@ import React, {Component} from 'react'
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 import {Link} from "react-router-dom";
-import {rollDice} from "../../reducers/funcs";
+import {addScore, rollDice} from "../../reducers/allactions";
 import movers from '../../reducers/movers'
 
 class SnakeLadder extends Component{
     diceClicked(){
+        this.props.addScore(this.props.user, 120);
         let rand = parseInt(Math.random() * 6 + 1);
         let newPos = this.props.game.get('player1_position') + rand;
         movers.map(function (mover) {
@@ -15,17 +16,31 @@ class SnakeLadder extends Component{
         });
 
         if(this.props.isMyTurn){
+            if(newPos > 99)
+                newPos = 99;
             this.props.rollDice(this.props.game, newPos, this.props.game.get('player2_position'));
+            if(newPos == 99){
+                alert("You won!");
+            }
+
             if(this.props.game.get('player2').toString() === "bot"){
                 let botNewPos = this.props.game.get('player2_position') + parseInt((Math.random() * 6 + 1));
                 movers.map(function (mover) {
-                    if(mover.start == botNewPos)
+                    if(mover.start == botNewPos + 1)
                         botNewPos = mover.end - 1;
                 });
                 let onRoll = this.props.rollDice;
                 let thisGame = this.props.game;
+                let thisUser = this.props.user;
+                let onAdd = this.props.addScore;
                 setTimeout(function () {
+                    if(botNewPos > 99)
+                        botNewPos = 99;
                     onRoll(thisGame, newPos, botNewPos);
+                    if(botNewPos == 99){
+                        alert("You lose!")
+                        onAdd(thisUser, 50);
+                    }
                 }, 1000);
             }
         }
@@ -92,7 +107,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    rollDice: rollDice
+    rollDice: rollDice,
+    addScore: addScore
 }, dispatch)
 
 export default connect(

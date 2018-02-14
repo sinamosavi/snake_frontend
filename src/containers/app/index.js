@@ -10,7 +10,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {
     signOut
-} from '../../reducers/funcs'
+} from '../../reducers/allactions'
 import withRouter from "react-router-dom/es/withRouter";
 
 const App = (props) => (

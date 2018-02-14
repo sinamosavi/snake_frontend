@@ -1,19 +1,21 @@
 import Parse from 'parse'
 import {push} from "react-router-redux/es/actions";
-export const MOVE_REQUESTED = 'funcs/MOVE_REQUESTED'
-export const SIGN_IN = 'funcs/SIGN_IN'
-export const SIGN_OUT = 'funcs/SIGN_OUT'
-export const SIGN_UP = 'funcs/SIGN_UP'
-export const CREATE_NEW_GAME_REQUEST = 'funcs/CREATE_NEW_GAME_REQUEST'
-export const JOIN_GAME = 'funcs/JOIN_GAME'
-export const WITH_PLAYER = 'funcs/WITH_PLAYER'
-export const WITH_BOT = 'funcs/WITH_BOT'
-export const CHANGE_PROFILE = 'funcs/CHANGE_PROFILE'
-export const ROLL_DICE = 'funcs/ROLL_DICE'
+
+export const MOVE_REQUESTED = 'allactions/MOVE_REQUESTED'
+export const SIGN_IN = 'allactions/SIGN_IN'
+export const SIGN_OUT = 'allactions/SIGN_OUT'
+export const SIGN_UP = 'allactions/SIGN_UP'
+export const CREATE_NEW_GAME_REQUEST = 'allactions/CREATE_NEW_GAME_REQUEST'
+export const JOIN_GAME = 'allactions/JOIN_GAME'
+export const WITH_PLAYER = 'allactions/WITH_PLAYER'
+export const WITH_BOT = 'allactions/WITH_BOT'
+export const CHANGE_PROFILE = 'allactions/CHANGE_PROFILE'
+export const ROLL_DICE = 'allactions/ROLL_DICE'
+export const ADD_SCORE = 'allactions/ADD_SCORE'
 
 const initialState = {
-    turn:1,
-    place: [0,0],
+    turn: 1,
+    place: [0, 0],
     myTurn: 1,
     user: null,
     player2: null,
@@ -24,56 +26,61 @@ const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
         case CREATE_NEW_GAME_REQUEST:
-            return{
+            return {
                 ...state,
                 game: action.game
             }
         case JOIN_GAME:
-            return{
+            return {
                 ...state,
                 game: action.game,
                 isMyTurn: action.isMyTurn
             }
         case WITH_PLAYER:
-            return{
+            return {
                 ...state,
                 player2: action.player2
             }
         case WITH_BOT:
-            return{
+            return {
                 ...state,
                 player2: 'bot'
             }
         case SIGN_UP:
-            return{
+            return {
                 ...state,
                 user: action.user
             }
         case SIGN_IN:
-            return{
+            return {
                 ...state,
                 user: action.user
             }
         case SIGN_OUT:
-            return{
+            return {
                 ...state,
                 user: null
             }
         case MOVE_REQUESTED:
             let newPlace = state.place;
             newPlace[state.turn - 1] += parseInt((Math.random() * 6) + 1);
-            return{
+            return {
                 ...state,
                 place: newPlace,
                 turn: (state.turn) % 2 + 1,
             }
         case CHANGE_PROFILE:
-            return{
+            return {
+                ...state,
+                user: action.user
+            }
+        case ADD_SCORE:
+            return {
                 ...state,
                 user: action.user
             }
         case ROLL_DICE:
-            return{
+            return {
                 ...state,
                 game: action.game,
                 isMyTurn: !state.isMyTurn
@@ -96,13 +103,13 @@ export const randomGenerator = () => {
 export const signIn = (user, pass) => {
     return dispatch => {
         Parse.User.logIn(user, pass, {
-            success: function(user) {
+            success: function (user) {
                 dispatch({
                     type: SIGN_IN,
                     user: user,
                 });
             },
-            error: function(user, error) {
+            error: function (user, error) {
                 alert("Error: " + error.message);
             }
         });
@@ -128,14 +135,15 @@ export const signUp = (username, password, first_name, last_name, gender, birthd
         user.set("gender", gender);
         user.set("birthday", birthday);
         user.set("city", city);
+        user.set("score", 0);
         user.signUp(null, {
-            success: function(user) {
+            success: function (user) {
                 dispatch({
                     type: SIGN_UP,
                     user: user,
                 });
             },
-            error: function(user, error) {
+            error: function (user, error) {
                 alert("Error: " + error.message);
             }
         });
@@ -174,14 +182,14 @@ export const createNewGame = () => {
         newGame.set("player1_position", 0);
         newGame.set("player2_position", 0);
         newGame.save(null, {
-            success: function(new_game) {
+            success: function (new_game) {
                 dispatch({
                     type: CREATE_NEW_GAME_REQUEST,
                     game: new_game
                 });
                 let query = new Parse.Query(Game);
                 let subscription = query.subscribe();
-                subscription.on('update', function(game){
+                subscription.on('update', function (game) {
 
                     alert("player " + game.get('player2').toString())
                     return dispatch({
@@ -193,18 +201,18 @@ export const createNewGame = () => {
                 return setTimeout(() => {
                     new_game.set('player2', 'bot');
                     new_game.save(null, {
-                        success: function(ng) {
+                        success: function (ng) {
                             dispatch({
                                 type: WITH_BOT
                             })
                         },
-                        error: function(ng, error) {
+                        error: function (ng, error) {
                             alert('Failed to create new Game, with error code: ' + error.message);
                         }
                     });
                 }, 1000)
             },
-            error: function(new_game, error) {
+            error: function (new_game, error) {
                 alert('Failed to create new Game, with error code: ' + error.message);
             }
         });
@@ -217,8 +225,8 @@ export const joinToGame = (gameId, username) => {
         let query = new Parse.Query(Game);
         query.equalTo("objectId", gameId);
         query.find({
-            success:function(list) {
-                if(list.length){
+            success: function (list) {
+                if (list.length) {
                     let g = list[0];
                     g.set('player2', username);
                     g.save(null, {
@@ -236,7 +244,7 @@ export const joinToGame = (gameId, username) => {
                 }
 
             },
-            error: function(list) {
+            error: function (list) {
 
             }
         });
@@ -261,3 +269,24 @@ export const rollDice = (game, p1NewPos, p2NewPos) => {
         })
     }
 };
+
+export const addScore = (user, score) => {
+    return dispatch => {
+        let newScore = parseInt(user.get('score')) + score;
+        user.set("score", newScore);
+        user.save(null,
+            {
+                success: function (user) {
+                    alert("newScore: " + newScore);
+                    dispatch({
+                        type: ADD_SCORE,
+                        user: user,
+                    });
+                },
+                error: function (user, error) {
+                    alert("change score error: " + error.message)
+                }
+            })
+    }
+};
+

@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import {
   signIn,
   signOut,
-} from '../../reducers/funcs'
+} from '../../reducers/allactions'
 
 class LoginForm extends React.Component {
     handleSignIn(e) {
