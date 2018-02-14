@@ -5,6 +5,7 @@ import About from '../about'
 import Login from '../login'
 import SignUp from '../signUp'
 import Game from '../Game'
+import Profile from '../Profile'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {
@@ -19,6 +20,7 @@ const App = (props) => (
       <Link to="/about-us">About</Link>
       <Link to="/login" style={{display: !props.user ? '' : 'none' }}>Login</Link>
       <Link to="/signUp" style={{display: !props.user ? '' : 'none' }}>SignUp</Link>
+        <Link to="/profile" style={{display: props.user ? '' : 'none' }}>Profile</Link>
       <button style={{display: props.user ? '' : 'none' }} onClick={props.signOut}>Sign out</button>
     </header>
 
@@ -28,6 +30,7 @@ const App = (props) => (
       <Route exact path="/login" component={Login} />
       <Route exact path="/signUp" component={SignUp} />
       <Route exact path="/game" component={Game} />
+      <Route exact path="/profile" component={Profile} />
     </main>
   </div>
 )

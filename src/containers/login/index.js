@@ -27,11 +27,8 @@ class LoginForm extends React.Component {
 
 const Login = props => (
     <div>
-        <h1>My cool App</h1>
+        <h1>My cool Game</h1>
         {
-            (props.user) ?
-                <button onClick={props.signOut}>signOut</button>
-                :
                 <LoginForm onSignIn={props.signIn}/>
         }
     </div>

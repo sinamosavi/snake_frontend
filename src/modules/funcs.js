@@ -8,6 +8,7 @@ export const CREATE_NEW_GAME_REQUEST = 'funcs/CREATE_NEW_GAME_REQUEST'
 export const JOIN_GAME = 'funcs/JOIN_GAME'
 export const WITH_PLAYER = 'funcs/WITH_PLAYER'
 export const WITH_BOT = 'funcs/WITH_BOT'
+export const CHANGE_PROFILE = 'funcs/CHANGE_PROFILE'
 
 const initialState = {
     turn: 1,
@@ -62,6 +63,11 @@ export default (state = initialState, action) => {
                 ...state,
                 place: newPlace,
                 turn: (state.turn) % 2 + 1,
+            }
+        case CHANGE_PROFILE:
+            return{
+                ...state,
+                user: action.user
             }
 
         default:
@@ -124,6 +130,30 @@ export const signUp = (username, password, first_name, last_name, gender, birthd
                 alert("Error: " + error.message);
             }
         });
+    }
+}
+
+export const changeProfile = (user, username, password, first_name, last_name, gender, birthday, city) => {
+    return dispatch => {
+        user.set("username", username);
+        user.set("password", password);
+        user.set("first_name", first_name);
+        user.set("last_name", last_name);
+        user.set("gender", gender);
+        user.set("birthday", birthday);
+        user.set("city", city);
+        user.save(null, {
+            success: function (user) {
+                alert("Profile changed successfully!")
+                dispatch({
+                    type: CHANGE_PROFILE,
+                    user: user,
+                });
+            },
+            error: function (user, error) {
+                alert("Change profile error: " + error.message)
+            }
+        })
     }
 }
 

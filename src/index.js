@@ -8,7 +8,7 @@ import Parse from 'parse'
 import 'sanitize.css/sanitize.css'
 import './index.css'
 
-Parse.serverURL = 'http://nlocalhost:8030/wp';
+Parse.serverURL = 'http://localhost:8030/wp';
 Parse.initialize("myAppId123456", '1xoWtDkxw8oZvX3bzhdTuHU7KZB8SGZD9jWQ2V9p');
 const target = document.querySelector('#root')
 
